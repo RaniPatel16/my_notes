@@ -1,0 +1,63 @@
+-- Select Database
+USE Student;
+
+-- Create Table
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT,
+    Gender VARCHAR(10),
+    Department VARCHAR(50),
+    City VARCHAR(50)
+);
+
+-- Insert 10 Records
+INSERT INTO Student VALUES
+(1,'Rani',85,'Female','Computer','Idar'),
+(2,'Harsh',92,'Male','Computer','Ahmedabad'),
+(3,'Priya',78,'Female','IT','Surat'),
+(4,'Rahul',65,'Male','Mechanical','Vadodara'),
+(5,'Neha',88,'Female','Computer','Rajkot'),
+(6,'Amit',70,'Male','Civil','Mehsana'),
+(7,'Sneha',95,'Female','IT','Gandhinagar'),
+(8,'Karan',80,'Male','Mechanical','Patan'),
+(9,'Pooja',75,'Female','Civil','Modasa'),
+(10,'Jay',90,'Male','Computer','Himmatnagar');
+
+SELECT * FROM Student;
+
+
+DESC Student;
+ 
+ 
+SELECT Department, COUNT(*) AS Total_Students
+FROM Student
+GROUP BY Department;
+
+-- display avrage markes of the stufent
+SELECT AVG(Marks) AS Average_Marks
+FROM Student;
+
+-- display highest markes of student 
+SELECT MAX(Marks) 
+FROM Student;
+-- display min marks of each department 
+SELECT Department, MIN(Marks) 
+FROM Student
+GROUP BY Department;
+
+-- display student detailes in whitch department having morv then 2 marks 
+SELECT Department, COUNT(*) 
+FROM Student
+GROUP BY Department
+HAVING COUNT(*) = 2;
+
+-- diisplay dipartment whose average markes is greterthen 80 
+SELECT Department, AVG(Marks) 
+FROM Student
+GROUP BY Department
+HAVING AVG(Marks) > 80;
+-- display the total markes scored by each department 
+SELECT Department, SUM(Marks) 
+FROM Student
+GROUP BY Department;
