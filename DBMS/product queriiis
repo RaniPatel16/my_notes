@@ -1,0 +1,35 @@
+-- 1
+SELECT * FROM Product WHERE Price > 50000;
+
+-- 2
+SELECT AVG(Price) AS Average_Price
+FROM Product
+WHERE Brand='Apple';
+
+-- 3
+SELECT Brand, COUNT(*) AS Number_Of_Products
+FROM Product
+GROUP BY Brand;
+
+-- 4
+SELECT Brand, SUM(Quantity) AS Total_Quantity
+FROM Product
+GROUP BY Brand
+HAVING SUM(Quantity) > 100;
+
+-- 5
+SELECT Brand, AVG(Price) AS Average_Price
+FROM Product
+GROUP BY Brand
+ORDER BY Average_Price DESC
+LIMIT 1;
+
+-- 6
+SELECT ProductName
+FROM Product
+WHERE Brand IN (
+    SELECT Brand
+    FROM Product
+    GROUP BY Brand
+    HAVING SUM(Quantity) > 50
+);
