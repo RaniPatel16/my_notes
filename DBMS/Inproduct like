@@ -1,0 +1,40 @@
+CREATE DATABASE product;
+use product;
+CREATE TABLE product (
+   ProductName VARCHAR(50),
+     Category VARCHAR(50),
+     Price INT
+ );
+ 
+ INSERT INTO product VALUES
+('Laptop', 'Electronics',  55000),
+( 'Mobile', 'Electronics',  25000),
+('Chair', 'Furniture', 3000),
+( 'Table', 'Furniture', 7000),
+('Notebook', 'Stationery', 50),
+( 'Pen', 'Stationery',  20);
+ SELECT* from product;
+desc product;
+SELECT ProductName, Price
+FROM product;
+
+SELECT Category, COUNT(*) AS Totalproducts
+FROM product
+GROUP BY Category;
+
+Select Category ,COUNT(*) from product
+group by Category having COUNT(*)>1;
+
+SELECT * FROM Product
+ORDER BY Price ASC;
+SELECT * FROM Product LIMIT 3;
+SELECT Product_Name AS Item_Name,Price 
+FROM Product;
+
+SELECT DISTINCT Category
+FROM Product;
+-- like use to find charector in the word
+SELECT * from product where  ProductName like 'e%';
+SELECT * from product where ProductName like '%s';
+SELECT * from ProductName where product like '%le%';
+
