@@ -123,3 +123,16 @@ SELECT * from Students ORDER BY marks DESC;
 
 -- Show top 5 students by marks.
 SELECT * FROM Students LIMIT 5;
+
+
+
+-- Aggregation
+-- Count students.
+SELECT COUNT(*) FROM Students;
+
+-- Average marks.
+SELECT AVG(marks) from Students;
+
+
+-- Highest marks.
+SELECT MAX(marks) FROM Students;
