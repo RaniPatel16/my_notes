@@ -154,3 +154,7 @@ SELECT * FROM Students order by city;
 SELECT * from Students LIMIT 5;
 -- Sort students by city and then marks descending.
 SELECT * FROM Students order by city,marks asc;
+
+
+
+
