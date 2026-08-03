@@ -1,0 +1,64 @@
+-- Select Database
+USE product;
+
+-- Create Table
+CREATE TABLE Products (
+    Product_ID INT PRIMARY KEY,
+    Product_Name VARCHAR(100),
+    Stock_Quantity INT,
+    Price DECIMAL(10,2)
+);
+
+-- Insert Data
+INSERT INTO Products
+VALUES
+(1, 'Laptop', 15, 55000.00),
+(2, 'Mouse', 8, 500.00),
+(3, 'Keyboard', 0, 1200.00),
+(4, 'Monitor', 5, 12000.00),
+(5, 'USB Cable', 25, 250.00),
+(6, 'Headphones', 10, 1800.00),
+(7, 'Webcam', 0, 2200.00),
+(8, 'Speaker', 18, 3500.00);
+
+-- Add New Columns using ALTER TABLE
+ALTER TABLE Products
+ADD Category VARCHAR(50);
+
+ALTER TABLE Products
+ADD Supplier VARCHAR(100);
+
+-- Update Category
+UPDATE Products SET Category='Electronics' WHERE Product_ID=1;
+UPDATE Products SET Category='Accessories' WHERE Product_ID=2;
+UPDATE Products SET Category='Accessories' WHERE Product_ID=3;
+UPDATE Products SET Category='Electronics' WHERE Product_ID=4;
+UPDATE Products SET Category='Accessories' WHERE Product_ID=5;
+UPDATE Products SET Category='Electronics' WHERE Product_ID=6;
+UPDATE Products SET Category='Electronics' WHERE Product_ID=7;
+UPDATE Products SET Category='Electronics' WHERE Product_ID=8;
+
+-- Update Supplier
+UPDATE Products SET Supplier='Dell' WHERE Product_ID=1;
+UPDATE Products SET Supplier='Logitech' WHERE Product_ID=2;
+UPDATE Products SET Supplier='HP' WHERE Product_ID=3;
+UPDATE Products SET Supplier='Samsung' WHERE Product_ID=4;
+UPDATE Products SET Supplier='Boat' WHERE Product_ID=5;
+UPDATE Products SET Supplier='Sony' WHERE Product_ID=6;
+UPDATE Products SET Supplier='Logitech' WHERE Product_ID=7;
+UPDATE Products SET Supplier='JBL' WHERE Product_ID=8;
+
+-- Display Final Result
+SELECT
+    Product_ID,
+    Product_Name,
+    Category,
+    Supplier,
+    Stock_Quantity,
+    Price,
+    CASE
+        WHEN Stock_Quantity = 0 THEN 'Out of Stock'
+        WHEN Stock_Quantity <= 10 THEN 'Low Stock'
+        ELSE 'In Stock'
+    END AS Stock_Status
+FROM Products;
