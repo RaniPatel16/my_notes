@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+//Node Factory ----11111111111
+class Node{
+    public:
+    int data;
+    Node *next;
+    Node *prev;
+    
+    Node(int data){
+        this->data=data;
+        this->next=nullptr;
+        this->prev=nullptr;
+    }
+};
+
+
+//Doublylist Class ----22222222
+class Dbylinklist{
+    private:
+    Node *head;
+    Node *tail;
+    
+    public:
+    Dbylinklist(){
+        head=nullptr;
+        tail=nullptr;
+    }
+    
+    void InsertionAtfirst(int data){
+        Node *temp=new Node(data);
+        
+        if(head==nullptr){
+            head=temp;
+            tail=temp;
+            return;
+        }
+        
+        else{
+            head->prev=temp;
+            temp->next=head;
+            head=temp;
+        }
+    }
+    
+    void display(){
+        Node *curr=head;
+        while(curr!=nullptr){
+            cout<<curr->data<<endl;
+            curr=curr->next;
+        }
+    }
+    
+    
+    
+    
+    void display1(){
+        Node *last=tail;
+        while(last!=nullptr){
+            cout<<last->data<<endl;
+            last=last->prev;
+        }
+    }
+};
+
+
+
+
+
+int main()
+{
+    Dbylinklist obj;
+    obj.InsertionAtfirst(20);
+    obj.InsertionAtfirst(30);
+    obj.InsertionAtfirst(40);
+    obj.display();
+    obj.display1();
+    
+
+    return 0;
+}
