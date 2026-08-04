@@ -165,3 +165,12 @@ select * from courses order  by credits DESC;
 -- Sort students by department and marks.
 select * from students order by department desc,marks asc;
 
+-- alice 
+-- Display student_name as Name.
+select student_name as Name from students;
+-- Display marks as Score.
+select marks as score from students;
+-- Display department_name as Department.
+SELECT Department_Name AS Department
+FROM Departments;
+-- Display hod_name as Head Of Department.
