@@ -139,6 +139,9 @@ SELECT MIN(marks) from Students;
 -- Total marks.
 SELECT SUM(marks) from Students;
 
+
+
+
 -- ORDER BY Practice
 -- Display students sorted by marks ascending.
 SELECT * from Students ORDER BY marks ASC;
@@ -147,14 +150,18 @@ SELECT * from Students ORDER BY marks ASC;
 SELECT * from Students ORDER BY marks DESC;
 -- Sort students by age.
 SELECT *FROM Students order by age;
-
 -- Sort students by city alphabetically.
 SELECT * FROM Students order by city;
 -- Display top 5 students by marks.
 SELECT * from Students LIMIT 5;
 -- Sort students by city and then marks descending.
 SELECT * FROM Students order by city,marks asc;
-
-
-
+-- Display lowest 5 students by marks.
+SELECT  * from students order by marks ASC limit 5;
+-- Sort departments by name.
+SELECT * from departments order by department_name ASC;
+-- sort courcec by creaditts decending
+select * from courses order  by credits DESC;
+-- Sort students by department and marks.
+select * from students order by department desc,marks asc;
 
