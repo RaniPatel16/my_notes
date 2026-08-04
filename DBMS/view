@@ -1,0 +1,29 @@
+USE product;
+USE product;
+
+DROP TABLE IF EXISTS Products;
+
+CREATE TABLE Products (
+    Product_ID INT PRIMARY KEY,
+    Product_Name VARCHAR(100),
+    Stock_Quantity INT,
+    Price DECIMAL(10,2)
+);
+
+INSERT INTO Products VALUES
+(1, 'Laptop', 15, 55000.00),
+(2, 'Mouse', 8, 500.00),
+(3, 'Keyboard', 0, 1200.00),
+(4, 'Monitor', 5, 12000.00),
+(5, 'USB Cable', 25, 250.00),
+(6, 'Headphones', 10, 1800.00),
+(7, 'Webcam', 0, 2200.00),
+(8, 'Speaker', 18, 3500.00);
+SELECT * FROM Products;
+CREATE VIEW expansive_product AS
+SELECT *
+FROM Products
+WHERE Price > 1000;
+select * from expansive_product;
+
+DROP VIEW expansive_product;
