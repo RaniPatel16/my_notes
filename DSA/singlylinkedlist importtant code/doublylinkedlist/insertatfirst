@@ -1,81 +1,113 @@
 #include <iostream>
 using namespace std;
-//Node Factory ----11111111111
-class Node{
-    public:
+
+// Node Class
+class Node
+{
+public:
     int data;
-    Node *next;
     Node *prev;
-    
-    Node(int data){
-        this->data=data;
-        this->next=nullptr;
-        this->prev=nullptr;
+    Node *next;
+
+    Node(int value)
+    {
+        data = value;
+        prev = NULL;
+        next = NULL;
     }
 };
 
-
-//Doublylist Class ----22222222
-class Dbylinklist{
-    private:
+// Doubly Linked List Class
+class DoublyLinkedList
+{
+private:
     Node *head;
     Node *tail;
-    
-    public:
-    Dbylinklist(){
-        head=nullptr;
-        tail=nullptr;
+
+public:
+    // Constructor
+    DoublyLinkedList()
+    {
+        head = NULL;
+        tail = NULL;
     }
-    
-    void InsertionAtfirst(int data){
-        Node *temp=new Node(data);
-        
-        if(head==nullptr){
-            head=temp;
-            tail=temp;
+
+    // Insert at First
+    void insertAtFirst(int value)
+    {
+        Node *temp = new Node(value);
+
+        // Case 1 : List is Empty
+        if (head == NULL)
+        {
+            head = temp;
+            tail = temp;
             return;
         }
-        
-        else{
-            head->prev=temp;
-            temp->next=head;
-            head=temp;
-        }
+
+        // Case 2 : List has Nodes
+        head->prev = temp;
+        temp->next = head;
+        head = temp;
     }
-    
-    void display(){
-        Node *curr=head;
-        while(curr!=nullptr){
-            cout<<curr->data<<endl;
-            curr=curr->next;
+
+    // Display Forward
+    void displayForward()
+    {
+        if (head == NULL)
+        {
+            cout << "No Nodes are there." << endl;
+            return;
         }
+
+        Node *temp = head;
+
+        cout << "Forward : ";
+
+        while (temp != NULL)
+        {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+
+        cout << endl;
     }
-    
-    
-    
-    
-    void display1(){
-        Node *last=tail;
-        while(last!=nullptr){
-            cout<<last->data<<endl;
-            last=last->prev;
+
+    // Display Backward
+    void displayBackward()
+    {
+        if (head == NULL)
+        {
+            cout << "No Nodes are there." << endl;
+            return;
         }
+
+        Node *temp = tail;
+
+        cout << "Backward : ";
+
+        while (temp != NULL)
+        {
+            cout << temp->data << " ";
+            temp = temp->prev;
+        }
+
+        cout << endl;
     }
 };
 
-
-
-
-
+// Main Function
 int main()
 {
-    Dbylinklist obj;
-    obj.InsertionAtfirst(20);
-    obj.InsertionAtfirst(30);
-    obj.InsertionAtfirst(40);
-    obj.display();
-    obj.display1();
-    
+    DoublyLinkedList list;
+
+    list.insertAtFirst(10);
+    list.insertAtFirst(20);
+    list.insertAtFirst(30);
+    list.insertAtFirst(40);
+
+    list.displayForward();
+    list.displayBackward();
 
     return 0;
 }
