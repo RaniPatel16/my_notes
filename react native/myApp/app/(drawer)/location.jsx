@@ -1,71 +1,107 @@
+// import React, { useState } from "react";
+// import { View, Button, StyleSheet, Text } from "react-native";
+// import * as Location from "expo-location";
+
+// export default function LocationScreen() {
+//   const [accuracy, setAccuracy] = useState(null);
+//   const [altitude, setaltitude] = useState(null);
+//   const [altitudeAccuracy, setaltitudeAccuracy] = useState(null);
+//   const handleGrantPermission = async () => {
+//     const result = await Location.requestForegroundPermissionsAsync();
+//     console.log(result);
+//   };
+
+//   const handleGetCurrentLocation = async () => {
+//     const currentLocation = await Location.getCurrentPositionAsync({
+//       accuracy: Location.Accuracy.High,
+//     });
+
+//     console.log(currentLocation);
+
+//     setAccuracy(currentLocation.coords.accuracy);
+//     setaltitudeAccuracy(currentLocation.coords.altitudeAccuracy);
+//     <View style={{ height: 20 }} />
+//     setaltitude(currentLocation.coords.altitude);
+//   };
+
+//   return (
+//     <View style={styles.container}>
+//       <Button
+//         title="Grant Permission"
+//         onPress={handleGrantPermission}
+//       />
+
+//       <View style={{ height: 40 }} />
+
+//       <Button
+//         title="Get Current Location"
+//         onPress={handleGetCurrentLocation}
+//       />
+
+//       <View style={{ height: 20 }} />
+
+//       <Text style={styles.text}>
+//         Accuracy: {accuracy ? `${accuracy}` : "Not Available"}
+//         Altitude: {altitude ? `${altitude}` : "Not Available"}
+//         Altitude Accuracy: {altitudeAccuracy ? `${altitudeAccuracy}` : "Not Available"}
+//       </Text>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     backgroundColor: "black",
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   text: {
+//     color: "white",
+//     fontSize: 20,
+//     marginTop: 20,
+//   },
+// });
+
+
+
 import React, { useState } from "react";
-import { View, Button, StyleSheet, Text } from "react-native";
-import * as Location from "expo-location";
+import { View, Text, Button } from "react-native";
+import * as location from "expo-location";
 
 export default function LocationScreen() {
-  const [accuracy, setAccuracy] = useState(null);
-  const [altitude, setaltitude] = useState(null);
-  const [altitudeAccuracy, setaltitudeAccuracy] = useState(null);
-  const handleGrantPermission = async () => {
-    const result = await Location.requestForegroundPermissionsAsync();
+  const [address, setAddress] = useState(null);
+
+  const handleGetAddress = async () => {
+    const permission = await location.requestForegroundPermissionsAsync();
+
+    if (!permission.granted) {
+      alert("Permission Denied");
+      return;
+    }
+
+    const result = await location.geocodeAsync("Patna, Bihar");
+
     console.log(result);
-  };
 
-  const handleGetCurrentLocation = async () => {
-    const currentLocation = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.High,
-    });
-
-    console.log(currentLocation);
-
-    setAccuracy(currentLocation.coords.accuracy);
-    setaltitudeAccuracy(currentLocation.coords.altitudeAccuracy);
-    <View style={{ height: 20 }} />
-    setaltitude(currentLocation.coords.altitude);
+    setAddress(result[0]);
   };
 
   return (
-    <View style={styles.container}>
-      <Button
-        title="Grant Permission"
-        onPress={handleGrantPermission}
-      />
+    <View>
+      <Button title="Get Address" onPress={handleGetAddress} />
 
-      <View style={{ height: 40 }} />
-
-      <Button
-        title="Get Current Location"
-        onPress={handleGetCurrentLocation}
-      />
-
-      <View style={{ height: 20 }} />
-
-      <Text style={styles.text}>
-        Accuracy: {accuracy ? `${accuracy}` : "Not Available"}
-        Altitude: {altitude ? `${altitude}` : "Not Available"}
-        Altitude Accuracy: {altitudeAccuracy ? `${altitudeAccuracy}` : "Not Available"}
-      </Text>
+      {address && (
+        <>
+          <Text>Latitude: {address.latitude}</Text>
+          <Text>Longitude: {address.longitude}</Text>
+          <Text>Altitude: {address.altitude}</Text>
+          <Text>Accuracy: {address.accuracy}</Text>
+        </>
+      )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "black",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  text: {
-    color: "white",
-    fontSize: 20,
-    marginTop: 20,
-  },
-});
-
-
-
-
 
 
 
