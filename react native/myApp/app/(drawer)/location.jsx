@@ -11,6 +11,10 @@
 //     console.log(result);
 //   };
 
+
+
+
+ 
 //   const handleGetCurrentLocation = async () => {
 //     const currentLocation = await Location.getCurrentPositionAsync({
 //       accuracy: Location.Accuracy.High,
