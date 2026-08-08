@@ -24,6 +24,7 @@ GROUP BY Brand
 ORDER BY Average_Price DESC
 LIMIT 1;
 
+
 -- 6
 SELECT ProductName
 FROM Product
