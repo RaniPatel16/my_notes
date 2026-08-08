@@ -69,45 +69,64 @@
 
 
 
-import React, { useState } from "react";
+// geo code 
+
 import { View, Text, Button } from "react-native";
-import * as location from "expo-location";
+import * as Location from "expo-location";
+import { useState } from "react";
 
 export default function LocationScreen() {
+
   const [address, setAddress] = useState(null);
 
   const handleGetAddress = async () => {
-    const permission = await location.requestForegroundPermissionsAsync();
+
+    const permission =
+      await Location.requestForegroundPermissionsAsync();
 
     if (!permission.granted) {
-      alert("Permission Denied");
+      alert("permission denied");
       return;
     }
 
-    const result = await location.geocodeAsync("Patna, Bihar");
+    const currentLocation =
+      await Location.getCurrentPositionAsync();
 
-    console.log(result);
+    const getAddress =
+      await Location.reverseGeocodeAsync({
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+      });
 
-    setAddress(result[0]);
+    setAddress(getAddress);
   };
 
+  const fullAddress = address
+    ? `${address[0].name}, ${address[0].street}, ${address[0].city}, ${address[0].region}, ${address[0].country} - ${address[0].postalCode}`
+    : "";
+
   return (
-    <View>
-      <Button title="Get Address" onPress={handleGetAddress} />
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "teal",
+      }}
+    >
+      <Text>React Native Expo Location Class</Text>
+
+      <Button
+        title="Get Address"
+        onPress={handleGetAddress}
+      />
 
       {address && (
-        <>
-          <Text>Latitude: {address.latitude}</Text>
-          <Text>Longitude: {address.longitude}</Text>
-          <Text>Altitude: {address.altitude}</Text>
-          <Text>Accuracy: {address.accuracy}</Text>
-        </>
+        <Text>{fullAddress}</Text>
       )}
     </View>
   );
 }
-
-
 
 
 
