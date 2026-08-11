@@ -1,204 +1,683 @@
+# Singly Linked List — Insertion
+
+Insertion means **adding a new node** to a singly linked list.
+
+There are **3 types of insertion**:
+
+```text
+Insertion
+   │
+   ├── 1. At First
+   ├── 2. At Last
+   └── 3. In Between
+```
+
+---
+
+## Introduction
+
+A **Singly Linked List** is a linear data structure where each node contains two fields:
+
+- **Data / Value:** The actual value stored in the node.
+- **Next:** Pointer/reference to the next node in the list.
+
+The last node points to `NULL`.
+
+---
+
+## Node Structure Representation
+
+```cpp
 #include <iostream>
 using namespace std;
 
-class Node {
+class Node
+{
 public:
-    int data;
-    Node* next;
+    int value;
+    Node *next;
 
-    Node(int value) {
-        data = value;
-        next = NULL;
+    Node(int value)
+    {
+        this->value = value;
+        this->next = NULL;
+    }
+};
+```
+
+### Basic Node Structure
+
+```text
+┌──────────┬──────────┐
+│  Value   │   Next   │
+└──────────┴──────────┘
+```
+
+Example:
+
+```text
+head
+ ↓
+┌──────┬──────┐     ┌──────┬──────┐     ┌──────┬──────┐
+│  10  │  •───┼────→│  20  │  •───┼────→│  30  │ NULL │
+└──────┴──────┘     └──────┴──────┘     └──────┴──────┘
+```
+
+---
+
+# 1. Insertion at First
+
+A new node is inserted **before the current head**.
+
+## Cases
+
+### Case 1: `head == NULL`
+
+The linked list is empty.
+
+```text
+Before:
+
+head → NULL
+
+Insert 10
+
+After:
+
+head
+ ↓
+10 → NULL
+```
+
+### Case 2: Nodes Already Exist
+
+```text
+Before:
+
+head
+ ↓
+10 → 20 → 30 → NULL
+
+Insert 5
+
+After:
+
+head
+ ↓
+5 → 10 → 20 → 30 → NULL
+```
+
+### Main Logic
+
+```cpp
+temp->next = head;
+head = temp;
+```
+
+### Code
+
+```cpp
+void insertAtFirst(int data)
+{
+    Node *temp = new Node(data);
+
+    temp->next = head;
+    head = temp;
+}
+```
+
+---
+
+# 2. Insertion at Last
+
+A new node is inserted **at the end** of the linked list.
+
+There are **2 cases**.
+
+## Case 1: `head == NULL`
+
+The linked list is empty.
+
+```text
+Before:
+
+head → NULL
+
+Insert 10
+
+After:
+
+head
+ ↓
+10 → NULL
+```
+
+### Logic
+
+```cpp
+head = temp;
+return;
+```
+
+---
+
+## Case 2: `n > 0` Nodes
+
+Suppose the linked list already contains nodes.
+
+```text
+Before:
+
+head
+ ↓
+10 → 20 → 30 → NULL
+
+Insert 40
+
+After:
+
+head
+ ↓
+10 → 20 → 30 → 40 → NULL
+```
+
+### Find the Last Node
+
+```cpp
+while (temp->next != NULL)
+{
+    temp = temp->next;
+}
+
+temp->next = newNode;
+```
+
+### Code
+
+```cpp
+void insertAtLast(int data)
+{
+    Node *newNode = new Node(data);
+
+    // Case 1: No node
+    if (head == NULL)
+    {
+        head = newNode;
+        return;
+    }
+
+    // Case 2: n nodes
+    Node *temp = head;
+
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+}
+```
+
+---
+
+# 3. Insertion in Between
+
+Insert a new node **after a targeted value**.
+
+There are **3 cases**.
+
+## Case 1: List is Empty
+
+```text
+head → NULL
+
+"No nodes are there"
+```
+
+### Code
+
+```cpp
+if (head == NULL)
+{
+    cout << "Nodes are not there" << endl;
+    return;
+}
+```
+
+---
+
+## Case 2: Target Not Found
+
+Suppose:
+
+```text
+10 → 20 → 30 → NULL
+
+Target = 50
+```
+
+Since `50` is not present:
+
+```text
+"Targeted node doesn't exist"
+```
+
+### Code
+
+```cpp
+if (temp == NULL)
+{
+    cout << "Targeted node doesn't exist" << endl;
+    return;
+}
+```
+
+---
+
+## Case 3: Target Found
+
+Suppose the target is `20`.
+
+```text
+Before:
+
+10 → 20 → 30 → NULL
+      ↑
+    target
+```
+
+Insert `25`.
+
+```text
+After:
+
+10 → 20 → 25 → 30 → NULL
+```
+
+### Main Logic
+
+```cpp
+newNode->next = temp->next;
+temp->next = newNode;
+```
+
+### Code
+
+```cpp
+void insertInBetween(int data, int targetedValue)
+{
+    // Case 1: No node
+    if (head == NULL)
+    {
+        cout << "Nodes are not there" << endl;
+        return;
+    }
+
+    Node *temp = head;
+
+    // Find target
+    while (temp != NULL &&
+           temp->value != targetedValue)
+    {
+        temp = temp->next;
+    }
+
+    // Case 2: Target not found
+    if (temp == NULL)
+    {
+        cout << "Targeted node doesn't exist" << endl;
+        return;
+    }
+
+    // Case 3: Target found
+    Node *newNode = new Node(data);
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+```
+
+---
+
+# 4. Display / Traversal
+
+Display means visiting every node from `head` to `NULL`.
+
+```text
+head
+ ↓
+10 → 20 → 25 → 30 → NULL
+```
+
+### Code
+
+```cpp
+void display()
+{
+    if (head == NULL)
+    {
+        cout << "No nodes exist" << endl;
+        return;
+    }
+
+    Node *temp = head;
+
+    while (temp != NULL)
+    {
+        cout << temp->value << " ";
+        temp = temp->next;
+    }
+
+    cout << endl;
+}
+```
+
+---
+
+# Full Code — Singly Linked List Insertion
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int value;
+    Node *next;
+
+    Node(int value)
+    {
+        this->value = value;
+        this->next = NULL;
     }
 };
 
+class SinglyLinkedList
+{
+private:
+    Node *head;
 
-// 1. Insert at Beginning
-void insertAtBeginning(Node*& head, int value) {
+public:
 
-    Node* newNode = new Node(value);
-
-    newNode->next = head;
-    head = newNode;
-}
-
-
-// 2. Insert at Last
-void insertAtLast(Node*& head, int value) {
-
-    Node* newNode = new Node(value);
-
-    if (head == NULL) {
-        head = newNode;
-        return;
+    SinglyLinkedList()
+    {
+        this->head = NULL;
     }
 
-    Node* temp = head;
+    // 1. INSERTION AT FIRST
+    void insertAtFirst(int data)
+    {
+        Node *temp = new Node(data);
 
-    while (temp->next != NULL) {
-        temp = temp->next;
+        // Case 1 and Case 2
+        temp->next = head;
+        head = temp;
     }
 
-    temp->next = newNode;
-}
+    // 2. INSERTION AT LAST
+    void insertAtLast(int data)
+    {
+        Node *newNode = new Node(data);
 
-
-// 3. Insert After Target Value
-void insertAfter(Node* head, int targetValue, int newNodeData) {
-
-    Node* temp = head;
-
-    while (temp != NULL && temp->data != targetValue) {
-        temp = temp->next;
-    }
-
-    if (temp == NULL) {
-        cout << "Target value not found" << endl;
-        return;
-    }
-
-    Node* newNode = new Node(newNodeData);
-
-    newNode->next = temp->next;
-    temp->next = newNode;
-}
-
-
-// 4. Insert Before Target Value
-void insertBefore(Node*& head, int targetValue, int newNodeData) {
-
-    if (head == NULL) {
-        cout << "List is empty" << endl;
-        return;
-    }
-
-    Node* newNode = new Node(newNodeData);
-
-    // If target is first node
-    if (head->data == targetValue) {
-        newNode->next = head;
-        head = newNode;
-        return;
-    }
-
-    Node* temp = head;
-
-    while (temp->next != NULL &&
-           temp->next->data != targetValue) {
-        temp = temp->next;
-    }
-
-    if (temp->next == NULL) {
-        cout << "Target value not found" << endl;
-        delete newNode;
-        return;
-    }
-
-    newNode->next = temp->next;
-    temp->next = newNode;
-}
-
-
-// 5. Insert At Position
-void insertAtPosition(Node*& head, int position, int newNodeData) {
-
-    Node* newNode = new Node(newNodeData);
-
-    // Position 1 means beginning
-    if (position == 1) {
-        newNode->next = head;
-        head = newNode;
-        return;
-    }
-
-    Node* temp = head;
-
-    // Go to node before required position
-    for (int i = 1; i < position - 1; i++) {
-
-        if (temp == NULL) {
-            cout << "Invalid position" << endl;
-            delete newNode;
+        // Case 1: No node
+        if (head == NULL)
+        {
+            head = newNode;
             return;
         }
 
-        temp = temp->next;
+        // Case 2: n nodes
+        Node *temp = head;
+
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
     }
 
-    if (temp == NULL) {
-        cout << "Invalid position" << endl;
-        delete newNode;
-        return;
+    // 3. INSERTION IN BETWEEN
+    void insertInBetween(int data, int targetedValue)
+    {
+        // Case 1: No node
+        if (head == NULL)
+        {
+            cout << "Nodes are not there" << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        // Find target
+        while (temp != NULL &&
+               temp->value != targetedValue)
+        {
+            temp = temp->next;
+        }
+
+        // Case 2: Target not found
+        if (temp == NULL)
+        {
+            cout << "Targeted node doesn't exist" << endl;
+            return;
+        }
+
+        // Case 3: Target found
+        Node *newNode = new Node(data);
+
+        newNode->next = temp->next;
+        temp->next = newNode;
     }
 
-    newNode->next = temp->next;
-    temp->next = newNode;
-}
+    // DISPLAY
+    void display()
+    {
+        if (head == NULL)
+        {
+            cout << "No nodes exist" << endl;
+            return;
+        }
 
+        Node *temp = head;
 
-// Display Linked List
-void display(Node* head) {
+        while (temp != NULL)
+        {
+            cout << temp->value << " ";
+            temp = temp->next;
+        }
 
-    Node* temp = head;
-
-    while (temp != NULL) {
-        cout << temp->data << " -> ";
-        temp = temp->next;
+        cout << endl;
     }
+};
 
-    cout << "NULL" << endl;
-}
+int main()
+{
+    SinglyLinkedList obj;
 
+    obj.insertAtFirst(10);
+    obj.insertAtFirst(20);
 
-int main() {
+    obj.insertAtLast(30);
 
-    Node* head = NULL;
+    obj.insertInBetween(25, 20);
 
-    // Create original linked list
-    insertAtLast(head, 10);
-    insertAtLast(head, 32);
-    insertAtLast(head, 47);
-    insertAtLast(head, 18);
-    insertAtLast(head, 59);
-
-    cout << "Original List:" << endl;
-    display(head);
-
-
-    // 1. Insert at Beginning
-    insertAtBeginning(head, 5);
-
-    cout << "\nAfter Insert at Beginning:" << endl;
-    display(head);
-
-
-    // 2. Insert at Last
-    insertAtLast(head, 100);
-
-    cout << "\nAfter Insert at Last:" << endl;
-    display(head);
-
-
-    // 3. Insert 64 after 18
-    insertAfter(head, 18, 64);
-
-    cout << "\nAfter Insert 64 After 18:" << endl;
-    display(head);
-
-
-    // 4. Insert 50 before 47
-    insertBefore(head, 47, 50);
-
-    cout << "\nAfter Insert 50 Before 47:" << endl;
-    display(head);
-
-
-    // 5. Insert 25 at Position 3
-    insertAtPosition(head, 3, 25);
-
-    cout << "\nAfter Insert 25 At Position 3:" << endl;
-    display(head);
-
+    obj.display();
 
     return 0;
 }
+```
+
+---
+
+# Example
+
+### Operations
+
+```cpp
+obj.insertAtFirst(10);
+obj.insertAtFirst(20);
+obj.insertAtLast(30);
+obj.insertInBetween(25, 20);
+```
+
+### Step-by-Step
+
+```text
+After insertAtFirst(10):
+
+10 → NULL
+```
+
+```text
+After insertAtFirst(20):
+
+20 → 10 → NULL
+```
+
+```text
+After insertAtLast(30):
+
+20 → 10 → 30 → NULL
+```
+
+```text
+After insertInBetween(25, 20):
+
+20 → 25 → 10 → 30 → NULL
+```
+
+### Output
+
+```text
+20 25 10 30
+```
+
+---
+
+# ⭐ Exam Memory
+
+## AT FIRST
+
+```text
+temp->next = head;
+head = temp;
+```
+
+**Remember:** Change the `head`.
+
+---
+
+## AT LAST
+
+```text
+Find the last node.
+
+while (temp->next != NULL)
+{
+    temp = temp->next;
+}
+
+temp->next = newNode;
+```
+
+**Remember:** Reach the last node first.
+
+---
+
+## IN BETWEEN
+
+```text
+Find the target.
+
+newNode->next = temp->next;
+temp->next = newNode;
+```
+
+**Remember:** Change two links.
+
+---
+
+# Quick Case Revision
+
+```text
+                    INSERTION
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+          ▼             ▼             ▼
+      AT FIRST       AT LAST      IN BETWEEN
+          │             │             │
+       ┌──┴──┐       ┌──┴──┐      ┌──┼───────┐
+       │     │       │     │      │  │       │
+      NULL  Nodes   NULL   n>0   Empty  Not Found
+                                             │
+                                           Found
+```
+
+---
+
+# Important Pointer Operations
+
+### Insert at First
+
+```cpp
+temp->next = head;
+head = temp;
+```
+
+### Insert at Last
+
+```cpp
+temp->next = newNode;
+```
+
+### Insert in Between
+
+```cpp
+newNode->next = temp->next;
+temp->next = newNode;
+```
+
+---
+
+# One-Line Revision
+
+```text
+AT FIRST    → Change HEAD
+AT LAST     → Find LAST NODE
+IN BETWEEN  → Find TARGET
+```
+
+---
+
+# Topic Summary
+
+| Operation | What We Do |
+|---|---|
+| Insert at First | Insert before `head` |
+| Insert at Last | Insert after the last node |
+| Insert in Between | Insert after targeted value |
+| Display | Traverse from `head` to `NULL` |
+
+---
+
+# 📂 File Structure
+
+```text
+DSA
+└── Linked List
+    └── Singly Linked List
+        └── Insertion
+            ├── README.md
+            └── insertion.cpp
+```
+
+---
+
+# 📝 Commit Message
+
+```text
+Add singly linked list insertion notes and code
+```
