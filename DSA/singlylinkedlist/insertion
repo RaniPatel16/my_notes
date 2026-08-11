@@ -1,0 +1,260 @@
+Singly Linked List — Insertion Short Notes
+
+Insertion means adding a new node to a singly linked list.
+
+There are 3 types of insertion in your notes:
+
+Insertion
+   │
+   ├── 1. At First
+   ├── 2. At Last
+   └── 3. In Between
+1. Insertion at First
+
+A new node is inserted before the current head.
+
+Cases
+
+Case 1: head == NULL
+
+head → NULL
+
+Insert 10
+
+head → [10 | NULL]
+
+Case 2: Nodes already exist
+
+Before:
+head → 10 → 20 → 30 → NULL
+
+Insert 5:
+
+After:
+head → 5 → 10 → 20 → 30 → NULL
+Main logic
+temp->next = head;
+head = temp;
+2. Insertion at Last
+
+A new node is inserted at the end.
+
+Cases
+
+Case 1: head == NULL
+
+head → NULL
+
+Insert 10
+
+head → 10 → NULL
+head = temp;
+
+Case 2: n > 0 nodes
+
+Before:
+head → 10 → 20 → 30 → NULL
+
+Insert 40:
+
+After:
+head → 10 → 20 → 30 → 40 → NULL
+
+Find the last node:
+
+while (temp->next != NULL)
+{
+    temp = temp->next;
+}
+
+temp->next = newNode;
+
+This two-case structure is shown in your uploaded insertion notes.
+
+3. Insertion in Between
+
+Insert a new node after a targeted value.
+
+Cases
+
+Case 1: List is empty
+
+head → NULL
+
+"No nodes are there"
+
+Case 2: Target not found
+
+10 → 20 → 30 → NULL
+
+Target = 50
+
+"Targeted node doesn't exist"
+
+Case 3: Target found
+
+Before:
+
+10 → 20 → 30 → NULL
+      ↑
+    target
+
+Insert 25
+
+After:
+
+10 → 20 → 25 → 30 → NULL
+Main logic
+newNode->next = temp->next;
+temp->next = newNode;
+
+Your notes use targetedValue and include the target-not-found case.
+
+Full Code — Insertion
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int value;
+    Node *next;
+
+    Node(int value)
+    {
+        this->value = value;
+        this->next = NULL;
+    }
+};
+
+class SinglyLinkedList
+{
+private:
+    Node *head;
+
+public:
+
+    SinglyLinkedList()
+    {
+        this->head = NULL;
+    }
+
+    // 1. INSERTION AT FIRST
+    void insertAtFirst(int data)
+    {
+        Node *temp = new Node(data);
+
+        // Case 1 and Case 2
+        temp->next = head;
+        head = temp;
+    }
+
+
+    // 2. INSERTION AT LAST
+    void insertAtLast(int data)
+    {
+        Node *newNode = new Node(data);
+
+        // Case 1: No node
+        if (head == NULL)
+        {
+            head = newNode;
+            return;
+        }
+
+        // Case 2: n nodes
+        Node *temp = head;
+
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = newNode;
+    }
+
+
+    // 3. INSERTION IN BETWEEN
+    void insertInBetween(int data, int targetedValue)
+    {
+        // Case 1: No node
+        if (head == NULL)
+        {
+            cout << "Nodes are not there" << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        // Find target
+        while (temp != NULL &&
+               temp->value != targetedValue)
+        {
+            temp = temp->next;
+        }
+
+        // Case 2: Target not found
+        if (temp == NULL)
+        {
+            cout << "Targeted node doesn't exist" << endl;
+            return;
+        }
+
+        // Case 3: Target found
+        Node *newNode = new Node(data);
+
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+
+
+    // DISPLAY
+    void display()
+    {
+        if (head == NULL)
+        {
+            cout << "No nodes exist" << endl;
+            return;
+        }
+
+        Node *temp = head;
+
+        while (temp != NULL)
+        {
+            cout << temp->value << " ";
+            temp = temp->next;
+        }
+
+        cout << endl;
+    }
+};
+
+
+int main()
+{
+    SinglyLinkedList obj;
+
+    obj.insertAtFirst(10);
+    obj.insertAtFirst(20);
+
+    obj.insertAtLast(30);
+
+    obj.insertInBetween(25, 20);
+
+    obj.display();
+
+    return 0;
+}
+⭐ Exam Memory
+AT FIRST
+temp->next = head
+head = temp
+
+AT LAST
+find last node
+last->next = newNode
+
+IN BETWEEN
+find target
+newNode->next = temp->next
+temp->next = newNode
