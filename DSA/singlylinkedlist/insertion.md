@@ -663,21 +663,3 @@ IN BETWEEN  → Find TARGET
 
 ---
 
-# 📂 File Structure
-
-```text
-DSA
-└── Linked List
-    └── Singly Linked List
-        └── Insertion
-            ├── README.md
-            └── insertion.cpp
-```
-
----
-
-# 📝 Commit Message
-
-```text
-Add singly linked list insertion notes and code
-```
