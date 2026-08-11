@@ -139,6 +139,7 @@ NULL ← 25 ⇄ 36 → NULL
 
 ```cpp
 head = head->next;
+delete=head->prev
 head->prev = nullptr;
 ```
 
@@ -163,6 +164,7 @@ tail = NULL
 Case 3: n > 1 nodes
 
 head = head->next;
+delete=head->prev;
 head->prev = NULL;
 ```
 
