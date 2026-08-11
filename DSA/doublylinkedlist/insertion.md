@@ -1157,22 +1157,3 @@ IN BETWEEN
 | Backward Display | Use `prev` |
 
 ---
-
-# 📂 File Structure
-
-```text
-DSA
-└── Linked List
-    └── Doubly Linked List
-        └── Insertion
-            ├── README.md
-            └── insertion.cpp
-```
-
----
-
-# 📝 Commit Message
-
-```text
-Add doubly linked list insertion notes and code
-```
