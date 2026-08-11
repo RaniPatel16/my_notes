@@ -241,7 +241,7 @@ Suppose there is only one node:
 head
  ↓
 ┌───────────────┐
-│ prev | 10 | next │
+│prev | 10 |next│
 └───────────────┘
  ↑
 tail
