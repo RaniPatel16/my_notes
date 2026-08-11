@@ -1,9 +1,10 @@
-Singly Linked List — Insertion Short Notes
+# Singly Linked List — Insertion
 
-Insertion means adding a new node to a singly linked list.
+Insertion means **adding a new node** to a singly linked list.
 
-There are 3 types of insertion in your notes:
+There are **3 types of insertion**:
 
+```text
 Insertion
    │
    ├── 1. At First
@@ -14,85 +15,70 @@ Insertion
 A new node is inserted before the current head.
 
 Cases
-
 Case 1: head == NULL
-
 head → NULL
 
 Insert 10
 
 head → [10 | NULL]
-
 Case 2: Nodes already exist
-
 Before:
+
 head → 10 → 20 → 30 → NULL
 
 Insert 5:
 
 After:
+
 head → 5 → 10 → 20 → 30 → NULL
-Main logic
+Main Logic
 temp->next = head;
 head = temp;
 2. Insertion at Last
 
-A new node is inserted at the end.
+A new node is inserted at the end of the linked list.
 
 Cases
-
 Case 1: head == NULL
-
 head → NULL
 
 Insert 10
 
 head → 10 → NULL
 head = temp;
-
-Case 2: n > 0 nodes
-
+Case 2: n > 0 Nodes
 Before:
+
 head → 10 → 20 → 30 → NULL
 
 Insert 40:
 
 After:
+
 head → 10 → 20 → 30 → 40 → NULL
-
-Find the last node:
-
+Find the Last Node
 while (temp->next != NULL)
 {
     temp = temp->next;
 }
 
 temp->next = newNode;
-
-This two-case structure is shown in your uploaded insertion notes.
-
 3. Insertion in Between
 
 Insert a new node after a targeted value.
 
 Cases
-
-Case 1: List is empty
-
+Case 1: List is Empty
 head → NULL
 
 "No nodes are there"
-
-Case 2: Target not found
-
+Case 2: Target Not Found
 10 → 20 → 30 → NULL
 
 Target = 50
 
 "Targeted node doesn't exist"
-
-Case 3: Target found
-
+Case 3: Target Found
 Before:
 
 10 → 20 → 30 → NULL
@@ -104,12 +90,9 @@ Insert 25
 After:
 
 10 → 20 → 25 → 30 → NULL
-Main logic
+Main Logic
 newNode->next = temp->next;
 temp->next = newNode;
-
-Your notes use targetedValue and include the target-not-found case.
-
 Full Code — Insertion
 #include <iostream>
 using namespace std;
@@ -247,14 +230,34 @@ int main()
 }
 ⭐ Exam Memory
 AT FIRST
-temp->next = head
-head = temp
-
+temp->next = head;
+head = temp;
 AT LAST
 find last node
-last->next = newNode
 
+last->next = newNode;
 IN BETWEEN
 find target
-newNode->next = temp->next
-temp->next = newNode
+
+newNode->next = temp->next;
+temp->next = newNode;
+Quick Case Revision
+Singly Linked List
+        │
+        ▼
+    INSERTION
+        │
+   ┌────┼────┐
+   │    │    │
+   ▼    ▼    ▼
+ First Last Between
+   │    │      │
+   │    │      ├── Case 1: List Empty
+   │    │      ├── Case 2: Target Not Found
+   │    │      └── Case 3: Target Found
+   │    │
+   │    ├── Case 1: head == NULL
+   │    └── Case 2: n > 0 Nodes
+   │
+   ├── Case 1: head == NULL
+   └── Case 2: Nodes Already Exist
