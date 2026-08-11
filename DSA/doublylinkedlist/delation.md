@@ -65,6 +65,8 @@ Here:
 
 ```cpp
 head->next == nullptr
+or 
+head==tail
 ```
 
 or:
@@ -179,7 +181,7 @@ void deleteFirstNode()
     }
 
     // Case 2
-    else if (head->next == nullptr)
+    else if (head->next == nullptr||head==tail)
     {
         head = nullptr;
         tail = nullptr;
