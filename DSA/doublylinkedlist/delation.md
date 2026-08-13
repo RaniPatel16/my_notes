@@ -4,6 +4,7 @@ Deletion means **removing a node** from a Doubly Linked List.
 
 In this PPT, deletion is covered for:
 
+
 ```text
 Deletion
    │
