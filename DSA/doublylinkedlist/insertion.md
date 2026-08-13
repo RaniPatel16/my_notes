@@ -16,6 +16,8 @@ NULL ← 10 ⇄ 20 ⇄ 30 → NULL
        head          tail
 ```
 
+
+
 ---
 
 # 1. Node Structure
