@@ -2,18 +2,49 @@
 
 Deletion means **removing a node** from a Doubly Linked List.
 
-In this PPT, deletion is covered for:
-
+In this notes, deletion is covered in two ways:
 
 ```text
-Deletion
-   │
-   ├── 1. Delete First Node
-   │
-   └── 2. Delete Last Node
+                    DLL Deletion
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+       1. Delete First       2. Delete Last
+             Node                  Node
 ```
 
-> **Note:** Deletion in between is not covered in this PPT.
+> **Note:** Deletion of a node in between is not covered in these notes.
+
+---
+
+# Doubly Linked List
+
+A Doubly Linked List contains three fields in every node:
+
+```text
++---------+-------+---------+
+|  prev   | value |  next   |
++---------+-------+---------+
+```
+
+- `prev` → points to the previous node.
+- `value` → stores the data/value.
+- `next` → points to the next node.
+- `head` → points to the first node.
+- `tail` → points to the last node.
+
+### Basic Structure
+
+```text
+                              head                                      tail
+                               |                                         |
+                               v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+      +---------+-------+---------+
+```
 
 ---
 
@@ -21,17 +52,40 @@ Deletion
 
 Delete First Node means removing the **first node** of the Doubly Linked List.
 
-There are different cases depending on the number of nodes.
+There are **3 cases**:
+
+```text
+Delete First Node
+       |
+       +-- Case 1: head == NULL
+       |
+       +-- Case 2: Only 1 Node
+       |
+       +-- Case 3: n > 1 Nodes
+```
 
 ---
 
 ## Case 1: `head == NULL`
 
-If `head` is `NULL`, there are no nodes in the list.
+If:
+
+```cpp
+head == NULL
+```
+
+then there are no nodes in the list.
 
 ```text
-head → NULL
-tail → NULL
+       head
+        |
+        v
+      NULL
+
+       tail
+        |
+        v
+      NULL
 ```
 
 There is nothing to delete.
@@ -39,7 +93,7 @@ There is nothing to delete.
 ### Logic
 
 ```cpp
-if (head == nullptr)
+if (head == NULL)
 {
     cout << "No nodes are there" << endl;
     return;
@@ -53,21 +107,19 @@ if (head == nullptr)
 If there is only one node:
 
 ```text
-head
- ↓
-┌───────────────┐
-│ prev | 10 | next │
-└───────────────┘
- ↑
-tail
+                    head / tail
+                         |
+                         v
+
+                   +---------+-------+---------+
+             NULL <|  prev   |  10   |  next   |> NULL
+                   +---------+-------+---------+
 ```
 
 Here:
 
 ```cpp
-head->next == nullptr
-or 
-head==tail
+head->next == NULL
 ```
 
 or:
@@ -79,15 +131,15 @@ head == tail
 After deleting the only node:
 
 ```text
-head → NULL
-tail → NULL
+head ---> NULL
+tail ---> NULL
 ```
 
 ### Logic
 
 ```cpp
-head = nullptr;
-tail = nullptr;
+head = NULL;
+tail = NULL;
 ```
 
 ---
@@ -97,16 +149,20 @@ tail = nullptr;
 Suppose the list is:
 
 ```text
-NULL ← 10 ⇄ 25 ⇄ 36 → NULL
-        ↑             ↑
-       head          tail
+                              head                                      tail
+                               |                                         |
+                               v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+      +---------+-------+---------+
 ```
 
 We want to delete the first node `10`.
 
-### Step 1
+---
 
-Move `head` to the next node:
+### Step 1: Move `head` to the next node
 
 ```cpp
 head = head->next;
@@ -115,88 +171,129 @@ head = head->next;
 Now:
 
 ```text
-head
- ↓
-25 ⇄ 36
+                         head                                      tail
+                          |                                         |
+                          v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
 ```
 
-### Step 2
+---
 
-Set the new head's `prev` to `NULL`:
+### Step 2: Set the new head's `prev` to `NULL`
 
 ```cpp
-head->prev = nullptr;
+head->prev = NULL;
 ```
 
 Final:
 
 ```text
-NULL ← 25 ⇄ 36 → NULL
-        ↑       ↑
-       head    tail
+                         head                                      tail
+                          |                                         |
+                          v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
 ```
 
-### Main Logic
+---
+
+### Step 3: Delete the Old First Node
+
+To delete the old first node, we can keep a temporary pointer.
 
 ```cpp
+Node *temp = head;
+```
+
+However, in the deletion method below, we keep the old node through `temp` **before moving `head`**.
+
+The complete logic is:
+
+```cpp
+Node *temp = head;
+
 head = head->next;
-delete=head->prev
-head->prev = nullptr;
+
+head->prev = NULL;
+
+delete temp;
+```
+
+---
+
+# Delete First Node — Complete Logic
+
+```cpp
+void deleteFirstNode()
+{
+    // Case 1: Empty list
+    if (head == NULL)
+    {
+        cout << "No nodes are there" << endl;
+        return;
+    }
+
+    // Case 2: Only one node
+    else if (head->next == NULL || head == tail)
+    {
+        delete head;
+
+        head = NULL;
+        tail = NULL;
+    }
+
+    // Case 3: n > 1 nodes
+    else
+    {
+        Node *temp = head;
+
+        head = head->next;
+
+        head->prev = NULL;
+
+        delete temp;
+    }
+}
 ```
 
 ---
 
 # Delete First Node — Summary
 
-```text
-Case 1: head == NULL
+### Case 1: Empty List
 
+```cpp
+head == NULL
+```
+
+```text
 No nodes are there.
 ```
 
-```text
-Case 2: Only 1 node
-
-head = NULL
-tail = NULL
-```
-
-```text
-Case 3: n > 1 nodes
-
-head = head->next;
-delete=head->prev;
-head->prev = NULL;
-```
-
----
-
-# Delete First Node — Full Logic
+### Case 2: Only 1 Node
 
 ```cpp
-void deleteFirstNode()
-{
-    // Case 1
-    if (head == nullptr)
-    {
-        cout << "No nodes are there" << endl;
-        return;
-    }
+delete head;
 
-    // Case 2
-    else if (head->next == nullptr||head==tail)
-    {
-        head = nullptr;
-        tail = nullptr;
-    }
+head = NULL;
+tail = NULL;
+```
 
-    // Case 3
-    else
-    {
-        head = head->next;
-        head->prev = nullptr;
-    }
-}
+### Case 3: `n > 1` Nodes
+
+```cpp
+Node *temp = head;
+
+head = head->next;
+
+head->prev = NULL;
+
+delete temp;
 ```
 
 ---
@@ -205,7 +302,17 @@ void deleteFirstNode()
 
 Delete Last Node means removing the **last node** of the Doubly Linked List.
 
-There are different cases depending on the number of nodes.
+There are **3 cases**:
+
+```text
+Delete Last Node
+       |
+       +-- Case 1: head == NULL
+       |
+       +-- Case 2: Only 1 Node
+       |
+       +-- Case 3: n > 1 Nodes
+```
 
 ---
 
@@ -214,14 +321,21 @@ There are different cases depending on the number of nodes.
 If:
 
 ```cpp
-head == nullptr
+head == NULL
 ```
 
 then the list is empty.
 
 ```text
-head → NULL
-tail → NULL
+       head
+        |
+        v
+      NULL
+
+       tail
+        |
+        v
+      NULL
 ```
 
 There is nothing to delete.
@@ -229,7 +343,7 @@ There is nothing to delete.
 ### Logic
 
 ```cpp
-if (head == nullptr)
+if (head == NULL)
 {
     cout << "No nodes are there" << endl;
     return;
@@ -243,13 +357,13 @@ if (head == nullptr)
 Suppose there is only one node:
 
 ```text
-head
- ↓
-┌───────────────┐
-│prev | 10 |next│
-└───────────────┘
- ↑
-tail
+                    head / tail
+                         |
+                         v
+
+                   +---------+-------+---------+
+             NULL <|  prev   |  10   |  next   |> NULL
+                   +---------+-------+---------+
 ```
 
 Here:
@@ -261,34 +375,40 @@ head == tail
 After deleting the node:
 
 ```text
-head → NULL
-tail → NULL
+head ---> NULL
+tail ---> NULL
 ```
 
 ### Logic
 
 ```cpp
-head = nullptr;
-tail = nullptr;
+delete head;
+
+head = NULL;
+tail = NULL;
 ```
 
 ---
 
 ## Case 3: `n > 1` Nodes
 
-Suppose:
+Suppose the list is:
 
 ```text
-NULL ← 10 ⇄ 25 → NULL
-        ↑       ↑
-       head    tail
+                              head                                      tail
+                               |                                         |
+                               v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+      +---------+-------+---------+
 ```
 
-We want to delete the last node `25`.
+We want to delete the last node `36`.
 
-### Step 1
+---
 
-Move `tail` to the previous node:
+### Step 1: Move `tail` to the previous node
 
 ```cpp
 tail = tail->prev;
@@ -297,134 +417,183 @@ tail = tail->prev;
 Now:
 
 ```text
-NULL ← 10 → tail
+                              head                            tail
+                               |                               |
+                               v                               v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
 ```
 
-### Step 2
+---
 
-Set the new tail's `next` to `NULL`:
+### Step 2: Set the new tail's `next` to `NULL`
 
 ```cpp
-tail->next = nullptr;
+tail->next = NULL;
 ```
 
 Final:
 
 ```text
-NULL ← 10 → NULL
-        ↑
-     head/tail
+                              head                            tail
+                               |                               |
+                               v                               v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
 ```
 
-### Main Logic
+---
+
+### Step 3: Delete the Old Last Node
+
+Keep a temporary pointer before moving `tail`:
 
 ```cpp
-tail = tail->prev;
-tail->next = nullptr;
-```
-
----
-
-# Delete Last Node — Summary
-
-```text
-Case 1: head == NULL
-
-No nodes are there.
-```
-
-```text
-Case 2: Only 1 node
-
-head = NULL
-tail = NULL
-```
-
-```text
-Case 3: n > 1 nodes
+Node *temp = tail;
 
 tail = tail->prev;
+
 tail->next = NULL;
+
+delete temp;
 ```
 
 ---
 
-# Delete Last Node — Full Logic
+# Delete Last Node — Complete Logic
 
 ```cpp
 void deleteLastNode()
 {
-    // Case 1
-    if (head == nullptr)
+    // Case 1: Empty list
+    if (head == NULL)
     {
         cout << "No nodes are there" << endl;
         return;
     }
 
-    // Case 2
-    else if (head->next == nullptr || head == tail)
+    // Case 2: Only one node
+    else if (head->next == NULL || head == tail)
     {
-        head = nullptr;
-        tail = nullptr;
+        delete head;
+
+        head = NULL;
+        tail = NULL;
     }
 
-    // Case 3
+    // Case 3: n > 1 nodes
     else
     {
+        Node *temp = tail;
+
         tail = tail->prev;
-        tail->next = nullptr;
+
+        tail->next = NULL;
+
+        delete temp;
     }
 }
 ```
 
 ---
 
-# Diagrams
+# Delete Last Node — Summary
 
-## Delete First — Before
+### Case 1: Empty List
 
-```text
-head
- ↓
-NULL ← 10 ⇄ 25 ⇄ 36 → NULL
-                       ↑
-                      tail
+```cpp
+head == NULL
 ```
 
-Delete `10`.
-
-## Delete First — After
-
 ```text
-head
- ↓
-NULL ← 25 ⇄ 36 → NULL
-               ↑
-              tail
+No nodes are there.
+```
+
+### Case 2: Only 1 Node
+
+```cpp
+delete head;
+
+head = NULL;
+tail = NULL;
+```
+
+### Case 3: `n > 1` Nodes
+
+```cpp
+Node *temp = tail;
+
+tail = tail->prev;
+
+tail->next = NULL;
+
+delete temp;
 ```
 
 ---
 
-# Delete Last — Before
+# Complete Diagrams
+
+## Delete First Node — Before
 
 ```text
-head
- ↓
-NULL ← 10 ⇄ 25 ⇄ 36 → NULL
-                       ↑
-                      tail
+                              head                                      tail
+                               |                                         |
+                               v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+      +---------+-------+---------+
+```
+
+Delete `10`.
+
+---
+
+## Delete First Node — After
+
+```text
+                              head                            tail
+                               |                               |
+                               v                               v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
+```
+
+---
+
+# Delete Last Node — Before
+
+```text
+                              head                                      tail
+                               |                                         |
+                               v                                         v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |      |  prev   |  36   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+      +---------+-------+---------+
 ```
 
 Delete `36`.
 
-## Delete Last — After
+---
+
+# Delete Last Node — After
 
 ```text
-head
- ↓
-NULL ← 10 ⇄ 25 → NULL
-               ↑
-              tail
+                              head                            tail
+                               |                               |
+                               v                               v
+
+NULL <--- +---------+-------+---------+ <--> +---------+-------+---------+ ---> NULL
+          |  prev   |  10   |  next   |      |  prev   |  25   |  next   |
+          +---------+-------+---------+      +---------+-------+---------+
 ```
 
 ---
@@ -437,14 +606,15 @@ For more than one node:
 
 ```cpp
 head = head->next;
-head->prev = nullptr;
+head->prev = NULL;
 ```
 
 Remember:
 
 ```text
 Move HEAD
-   ↓
+    |
+    v
 Set PREV = NULL
 ```
 
@@ -456,14 +626,15 @@ For more than one node:
 
 ```cpp
 tail = tail->prev;
-tail->next = nullptr;
+tail->next = NULL;
 ```
 
 Remember:
 
 ```text
 Move TAIL
-   ↓
+    |
+    v
 Set NEXT = NULL
 ```
 
@@ -474,23 +645,41 @@ Set NEXT = NULL
 ## DELETE FIRST
 
 ```cpp
+Node *temp = head;
+
 head = head->next;
+
 head->prev = NULL;
+
+delete temp;
 ```
+
+---
 
 ## DELETE LAST
 
 ```cpp
+Node *temp = tail;
+
 tail = tail->prev;
+
 tail->next = NULL;
+
+delete temp;
 ```
+
+---
 
 ## ONLY ONE NODE
 
 ```cpp
+delete head;
+
 head = NULL;
 tail = NULL;
 ```
+
+---
 
 ## EMPTY LIST
 
@@ -507,51 +696,72 @@ No nodes are there.
 # Quick Revision
 
 ```text
-             DLL DELETION
-                  │
-        ┌─────────┴─────────┐
-        │                   │
-        ▼                   ▼
-  DELETE FIRST         DELETE LAST
-        │                   │
-        │                   │
- head = head->next    tail = tail->prev
-        │                   │
- head->prev = NULL    tail->next = NULL
+                    DLL DELETION
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+        DELETE FIRST          DELETE LAST
+              |                     |
+              v                     v
+       Node *temp = head     Node *temp = tail
+              |                     |
+              v                     v
+       head = head->next     tail = tail->prev
+              |                     |
+              v                     v
+       head->prev = NULL     tail->next = NULL
+              |                     |
+              +----------+----------+
+                         |
+                         v
+                    delete temp
 ```
 
 ---
 
 # Cases to Remember
 
+## DELETE FIRST
+
 ```text
 DELETE FIRST
-│
-├── Case 1 → head == NULL
-│            No nodes
-│
-├── Case 2 → Only 1 node
-│            head = NULL
-│            tail = NULL
-│
-└── Case 3 → n > 1 nodes
-             head = head->next
-             head->prev = NULL
+    |
+    +-- Case 1 → head == NULL
+    |            No nodes
+    |
+    +-- Case 2 → Only 1 node
+    |            delete head
+    |            head = NULL
+    |            tail = NULL
+    |
+    +-- Case 3 → n > 1 nodes
+                 temp = head
+                 head = head->next
+                 head->prev = NULL
+                 delete temp
 ```
+
+---
+
+## DELETE LAST
 
 ```text
 DELETE LAST
-│
-├── Case 1 → head == NULL
-│            No nodes
-│
-├── Case 2 → Only 1 node
-│            head = NULL
-│            tail = NULL
-│
-└── Case 3 → n > 1 nodes
-             tail = tail->prev
-             tail->next = NULL
+    |
+    +-- Case 1 → head == NULL
+    |            No nodes
+    |
+    +-- Case 2 → Only 1 node
+    |            delete head
+    |            head = NULL
+    |            tail = NULL
+    |
+    +-- Case 3 → n > 1 nodes
+                 temp = tail
+                 tail = tail->prev
+                 tail->next = NULL
+                 delete temp
 ```
 
 ---
@@ -559,10 +769,158 @@ DELETE LAST
 # One-Line Revision
 
 ```text
-Delete First → Move HEAD forward + remove PREV link
+Delete First
+→ Store old HEAD
+→ Move HEAD forward
+→ Set HEAD->prev = NULL
+→ Delete old HEAD
+```
 
-Delete Last  → Move TAIL backward + remove NEXT link
+```text
+Delete Last
+→ Store old TAIL
+→ Move TAIL backward
+→ Set TAIL->next = NULL
+→ Delete old TAIL
+```
+
+```text
+Only One Node
+→ Delete node
+→ head = NULL
+→ tail = NULL
+```
+
+```text
+Empty List
+→ No nodes are there
 ```
 
 ---
 
+# Full Code — DLL Deletion
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+
+    int value;
+    Node *prev;
+    Node *next;
+
+    Node(int value)
+    {
+        this->value = value;
+        this->prev = NULL;
+        this->next = NULL;
+    }
+};
+
+
+class DoublyLinkedList
+{
+public:
+
+    Node *head;
+    Node *tail;
+
+    DoublyLinkedList()
+    {
+        this->head = NULL;
+        this->tail = NULL;
+    }
+
+
+    // DELETE FIRST NODE
+    void deleteFirstNode()
+    {
+        // Case 1: Empty list
+        if (head == NULL)
+        {
+            cout << "No nodes are there" << endl;
+            return;
+        }
+
+        // Case 2: Only one node
+        else if (head->next == NULL || head == tail)
+        {
+            delete head;
+
+            head = NULL;
+            tail = NULL;
+        }
+
+        // Case 3: n > 1 nodes
+        else
+        {
+            Node *temp = head;
+
+            head = head->next;
+
+            head->prev = NULL;
+
+            delete temp;
+        }
+    }
+
+
+    // DELETE LAST NODE
+    void deleteLastNode()
+    {
+        // Case 1: Empty list
+        if (head == NULL)
+        {
+            cout << "No nodes are there" << endl;
+            return;
+        }
+
+        // Case 2: Only one node
+        else if (head->next == NULL || head == tail)
+        {
+            delete head;
+
+            head = NULL;
+            tail = NULL;
+        }
+
+        // Case 3: n > 1 nodes
+        else
+        {
+            Node *temp = tail;
+
+            tail = tail->prev;
+
+            tail->next = NULL;
+
+            delete temp;
+        }
+    }
+};
+```
+
+---
+
+# Final Revision Table
+
+| Operation | Case | Main Logic |
+|---|---|---|
+| Delete First | Empty | `head == NULL` |
+| Delete First | One Node | `head = NULL`, `tail = NULL` |
+| Delete First | `n > 1` | `head = head->next` |
+| Delete First | `n > 1` | `head->prev = NULL` |
+| Delete Last | Empty | `head == NULL` |
+| Delete Last | One Node | `head = NULL`, `tail = NULL` |
+| Delete Last | `n > 1` | `tail = tail->prev` |
+| Delete Last | `n > 1` | `tail->next = NULL` |
+
+---
+
+# GitHub Commit Message
+
+```text
+Add doubly linked list deletion notes and code
+```
