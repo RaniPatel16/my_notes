@@ -1,5 +1,6 @@
 # Doubly Linked List — Deletion
 
+
 Deletion means **removing a node** from a Doubly Linked List.
 
 In this notes, deletion is covered in two ways:
