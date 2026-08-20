@@ -68,3 +68,28 @@ ROLLBACK TO point1;
 COMMIT;
 
 SELECT * FROM accounts;
+   
+
+   <!-- SECOND CODE FOR ROLLBACK AND OTHERV  -->
+-- CREATE DATABASE bank_db;
+
+-- USE bank_db;
+
+-- CREATE TABLE pyments (
+--     id INT PRIMARY KEY,
+--     name VARCHAR(50),
+--     balance DECIMAL(10,2)
+-- );
+-- INSERT INTO pyments VALUES
+-- (1, 'A', 1000),
+-- (2, 'B', 1000);
+
+-- SELECT * FROM pyments;
+-- START TRANSACTION;
+
+-- UPDATE pyments
+-- SET balance = balance - 1000
+-- WHERE id = 1;
+
+-- SELECT * FROM pyments;
+-- rollback
