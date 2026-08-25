@@ -1,6 +1,10 @@
 # 📒 Next.js — Lecture 1
 
+
+
 ## 1. What is Next.js?
+
+
 
 **Next.js is an open-source React framework** developed by **Vercel**.
 
