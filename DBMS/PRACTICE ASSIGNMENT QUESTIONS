@@ -1,10 +1,4 @@
-CREATE DATABASE CollegeDB;
-USE CollegeDB;
-CREATE TABLE Departments (
-    department_id INT PRIMARY KEY,
-    department_name VARCHAR(50),
-    hod_name VARCHAR(50)
-);
+
 
 INSERT INTO Departments VALUES
 (1,'Computer Science','Dr. Sharma'),
