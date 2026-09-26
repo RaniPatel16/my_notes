@@ -1,0 +1,51 @@
+type StudentProps = {
+	id: number;
+	name: string;
+	course?: string | null;
+	age: number;
+	gender: Gender;
+};
+
+type Gender = "male" | "female" | "others";
+
+class Student {
+	private id: number;
+	protected name: string;
+	private age: number;
+	gender: Gender;
+	course?: string;
+
+	constructor(student:StudentProps) {
+		this.id = student.id;
+		this.name = student.name;
+		this.course = student?.course || "";
+		this.age = student.age;
+		this.gender = student.gender;
+	}
+
+    displayDetails() {
+         console.log(`Name: ${this.name} \nAge: ${this.age}\nCourse:${this.course}`)
+    }
+}
+
+class StarStudent extends Student {
+    getStarStudentName(){
+        console.log(this.name)
+    }
+}
+
+const dummyStudent:StudentProps[] = [{
+    id: 1234,
+    name: "Satyajeet",
+    age: 2345,
+    gender: "male"
+}]
+
+const student1 = new Student(dummyStudent[0])
+const student2 = new StarStudent(dummyStudent[0])
+
+// const student2 = new Student(dummyStudent[1])
+// const student2 = new Student(2, "Prashant", "MERN develoer", 19, "male",)
+
+// console.log(student1.)
+// student2.displayDetails()
